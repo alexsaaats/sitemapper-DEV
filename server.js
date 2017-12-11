@@ -42,10 +42,3 @@ app.get("/sitemap", function(req, res) {
   console.log("sitemap downloaded");
 });
 
-/*
-app.post("/newsitemap", function (req, res) {
-    console.log(req.body.baseurl)
-
-});
-
-*/

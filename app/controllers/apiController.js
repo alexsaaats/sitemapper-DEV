@@ -3,7 +3,9 @@
 var sitemapper = require("../../createsitemap");
 var runstatuscheck = require("../../checkstatus");
 var runscreenshots = require("../../getscreenshot");
+var runsslcheck = require("../../checkSSL");
 const siteURL  = require('../../app/models').siteurls;
+
 
 // ===============================================================================
 // ROUTING
@@ -19,11 +21,12 @@ module.exports = function(app) {
     console.log("You have hit the /api/createsitemap endpiont. PLEASE TRY AGAIN. ")
   });
 
-  app.get("/api/getscreenshots", function(req, res) {
-      runscreenshots(() => {
-        res.json('done');
-      });
-      console.log("You have hit the /api/getscreenshots endpiont. PLEASE TRY AGAIN. ")
+  app.get("/api/getUrls", function(req, res) {
+      siteURL.findAll({}).then(results => {
+          res.json(results);
+          //console.log("LOG FROM apiController, here is my URL info: " + results);
+          console.log("LOG FROM apiController, You have hit the /api/getUrls endpoint.")
+      })
   });
 
   app.get("/api/checkstatus", function(req, res) {
@@ -33,13 +36,19 @@ module.exports = function(app) {
     console.log("You have hit the /api/checkstatus endpoint. PLEASE TRY AGAIN. ")
   });
 
+  app.get("/api/getscreenshots", function(req, res) {
+      runscreenshots(() => {
+        res.json('done');
+      });
+      console.log("You have hit the /api/getscreenshots endpiont. PLEASE TRY AGAIN. ")
+  });
 
-  app.get("/api/getUrls", function(req, res) {
-      siteURL.findAll({}).then(results => {
-          res.json(results);
-          //console.log("LOG FROM apiController, here is my URL info: " + results);
-          console.log("LOG FROM apiController, You have hit the /api/getUrls endpoint.")
-      })
+
+  app.get("/api/checkSSL", function(req, res) {
+      runsslcheck(() => {
+        res.json();
+      });
+      console.log("CONTROLLER SAYS: You have hit route: /api/checkSSL")
   });
 
 

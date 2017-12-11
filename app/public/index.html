@@ -1,23 +1,17 @@
-
 <html>
 
 <head>
-
   <meta charset="UTF-8">
   <title>SAAATS Advanced Monitoring</title>
-
   <!-- adding in jquery --> 
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
   <!-- adding in jquery validation --> 
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-  
   <!-- Icons file -->
   <script src="https://use.fontawesome.com/c8b6d2fc87.js"></script>
-
   <!-- Handlebars JS file -->
   <script src='/static/assets/javascript/handlebars-v4.0.11.js'></script>
   <script src='/static/assets/javascript/handlebars-templates.js'></script>
-
   <!-- Semantic UI --> 
   <link rel="stylesheet" type="text/css" href="/static/assets/semantic/semantic.min.css">
 	<script
@@ -25,14 +19,6 @@
 	  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 	  crossorigin="anonymous"></script>
 	<script src="/static/assets/semantic/semantic.min.js"></script>
-	
-	<!-- script src="/menujs"></script> -->
-
-    <!-- Script to drive the dropdown menus --> 
-
-
-	
-
 </head>
 
 
@@ -66,172 +52,189 @@
   	  </div>
 </div>
 
+
+
+<!-- INPUT FIELD AND BUTTON ========================================================================= -->
 <div class="ui container" style="padding-top:15px; padding-bottom:70px;">
 
-		<form method="post" class="ui form" id="niceform">
-		  <div class="field input" >
-		    <label>Website Base URL</label>
-		    <p>  You must enter a fully qualifed address, for example, http://saaats.com. </p>
-		    <input type="url" name="niceurl" placeholder="mysite.com" id="niceurl">
-			    <div class="ui negative message hidden" id="badurlmsg">
-				  <i class="close icon"></i>
-				  <div class="header">
-				    That's not a valid URL. 
-				  </div>
-				  <p>Please make sure you enter a fully qualified URL, such as http://saaats.com
-				</p></div>
-		  </div>
+	<form method="post" class="ui form" id="niceform">
+	  <div class="field input" >
+	    <label>Website Base URL</label>
+	    <p>  You must enter a fully qualifed address, for example, http://saaats.com. </p>
+	    <input type="url" name="niceurl" placeholder="mysite.com" id="niceurl">
+		    <div class="ui negative message hidden" id="badurlmsg">
+			  <i class="close icon"></i>
+			  <div class="header"> That's not a valid URL. </div>
+			  <p>Please make sure you enter a fully qualified URL, such as http://saaats.com</p>
+			</div>
+	  </div>
 
-		  
-		  <!-- <button class="ui button" type="submit">Submit</button> -->
-		  <div class="ui animated button ui submit button" tabindex="0" type="submit" id="submit-site1" onclick="sitesubmit()">
-  			<div class="visible content">Scan this site</div>
-	  			<div class="hidden content">
-	    		<i class="right arrow icon"></i>
-	  			</div> 
-  		  </div>
-
-  		 
-		</form>
+	  <div class="ui animated button ui submit button" tabindex="0" type="submit" id="submit-site1" onclick="sitesubmit()">
+		<div class="visible content">Scan this site</div>
+		<div class="hidden content"><i class="right arrow icon"></i></div> 
+	  </div>
+	</form>
 
 
-		<div class="ui icon message hidden success" id="waitmessage">
-		  <i class="notched circle loading icon"></i>
-		  <div class="content">
-		    <div class="header">
-		      Our server is searching Google's records and building your sitemap. Just stand by... 
-		    </div>
-		    <p>We're building your sitemap and getting your table ready. If you are sitemapping a very large site, this could take a long time. Our system uses Google's records to create your sitemap. Learn what this means about your results.</p>
-		    <button id="learnmore" class="ui button">Learn More</button>
-		  </div>
-		</div>
 
-		<div class="ui basic modal">
-		  <div class="ui icon header">
-		    <i class="google icon"></i>
-		    How the Site Mapper Works
-		  </div>
-		  <div class="content">
-		    <p>Our system takes advantage of sitemaps that are indexed by Google. This means that your sitemap may not be reflective of the most recent changes on your website. For example, if you add a page today, Google probably won't index this for another 48 hours or more, so we will not discover that page until it's indexed. If you need more immediate results, consider our premium products. </p>
-		  </div>
-		  <div class="actions" align = "center">
-		    
-		    <div class="ui green ok inverted button">
-		      <i class="checkmark icon"></i>
-		      Got it, let's see the results!
-		    </div>
-		  </div>
-		</div>
-		
-		
-
-	
-<div class="ui secondary pointing menu">
-  <a class="item active">
-    Scan Results
-  </a>
+<!-- MESSAGES AND HIDDEN ELEMENTS ======================================================= --> 
+<div class="ui icon message hidden success" id="waitmessage">
+  <i class="notched circle loading icon"></i>
+  <div class="content">
+    <div class="header">
+      Our server is searching Google's records and building your sitemap. Just stand by... 
+    </div>
+    <p>We're building your sitemap and getting your table ready. If you are sitemapping a very large site, this could take a long time. Our system uses Google's records to create your sitemap. Learn what this means about your results.</p>
+    <button id="learnmore" class="ui button">Learn More</button>
+  </div>
 </div>
 
+<div class="ui icon message hidden info" id="STATUSwaitmessage">
+  <!-- <i class="notched circle loading icon"></i> -->
+  <div class="content">
+    <div class="header">
+      We are checking the pages for HTTP status codes. Please stand by... 
+    </div>
+    <p>This is usually pretty quick. We'll update the table when it's done.</p>
+    <!--<button id="learnmore" class="ui button">Learn More</button>-->
+  </div>
+</div>
 
+<div class="ui icon message hidden info" id="SHOTSwaitmessage">
+  <!-- <i class="notched circle loading icon"></i> -->
+  <div class="content">
+    <div class="header">
+      We are taking screenshots of every page. Please stand by... 
+    </div>
+    <p>This takes a while. Assume it takes about 5 seconds per page. We'll update the table when it's done.</p>
+    <!--<button id="learnmore" class="ui button">Learn More</button>-->
+  </div>
+</div>
 
+<div class="ui icon message hidden info" id="SSLwaitmessage">
+  <!-- <i class="notched circle loading icon"></i> -->
+  <div class="content">
+    <div class="header">
+      We are running the Qualys SSL tool on your site... 
+    </div>
+    <p>This will check for SSL factors like cert hostname, IP, grade, and more. You will see it updated in the SSL Table.</p>
+    <!--<button id="learnmore" class="ui button">Learn More</button>-->
+  </div>
+</div>
 
-<!-- MAIN CONTENT DIV - Main panel containing sitemap table-->
-<div class="ui segment" style="text-align:center;" id="scan-results">
-<div class="ui active dimmer">
-<div class="ui text loader">Loading</div>
+<div class="ui basic modal">
+  <div class="ui icon header">
+    <i class="google icon"></i>
+    How the Site Mapper Works
+  </div>
+  <div class="content">
+    <p>Our system takes advantage of sitemaps that are indexed by Google. This means that your sitemap may not be reflective of the most recent changes on your website. For example, if you add a page today, Google probably won't index this for another 48 hours or more, so we will not discover that page until it's indexed. If you need more immediate results, consider our premium products. </p>
+  </div>
+  <div class="actions" align = "center">
+    
+    <div class="ui green ok inverted button">
+      <i class="checkmark icon"></i>
+      Got it, let's see the results!
+    </div>
+  </div>
+</div>
+		
+		
 
+<!-- MAIN RESULTS PANEL - Main panel containing sitemap table and tools ========================================== -->
+<div class="ui segment"  id="scan-results">
+
+<div style="float:left; padding-top:25px; padding-left:25px;">
 <div class="currentname">Current Sitemap: SITE NAME</div>
 
 	<button class="ui right labeled icon button basic" id="getstatus">
 	<i class="right arrow icon"></i>
 	Get Status Codes
 	</button>
-
 	<button class="ui right labeled icon button basic" id = "getscreenshots">
 	<i class="right arrow icon"></i>
 	Get Screenshots
 	</button>
 	<br /><br />
 
+	<button class="ui right labeled icon button basic" id = "checkSSL">
+	<i class="right arrow icon"></i>
+	Check SSL
+	</button>
+	<button class="ui right labeled icon button basic" id = "getdomaininfo">
+	<i class="right arrow icon"></i>
+	Get Domain Info
+	</button>
+	<br /><br />
 
-<!-- HANDLEBARSSSSS   -->
-<script id="sitename" type = "text/x-handlebars-template">
-{{sitename}}
-</script>
+</div>
 
+<!-- INSERT SSL TABLE FROM HANDLEBARS COMPILED --> 
+<div class="ssltable"></div>
 
-<script id="table-template" type="text/x-handlebars-template"> 
-	<table class="ui celled table" id="urls-table" >
-    <thead> 
-        <th>ID</th> 
-        <th>URL</th> 
-        <th>URL Status</th>
-        <th>screenshotPath</th>
-        <th>Action</th> 
-    </thead> 
-    <tbody>
-	{{#each urls}}
-        <tr> 
-            <td>{{URLid}}</td> 
-            <td>{{URL}}</td> 
-            <td>{{statusCode}}</td> 
-            <td>{{screenshotPath}}</td> 
-            <td><a target="_blank" href="/static/screenshots/{{URLid}}.png">View</a></td> 
-        </tr> 
-        {{/each}}
-    </tbody> 
-</table> 
-</script>
-
-
-<!--The table is displayed here-->
+<!-- INSERT URLS TABLE FROM HANDLEBARS COMPILED -->
 <div class="urltable"></div>
 
-<!-- Close the dimmer tag --> 
-</div>
 
+<!-- closing what tag???? --> 
+</div>
 <!-- Close the main content sitemap table panel div --> 
 </div>
-
-
+<!-- FOOTER --> 
 <div class="ui bottom attached segment">
   <p><center>Copyright (C) 2017. Saaats LLC.</center></p>
 </div>
 
-	<!-- JQUERY TO PASS -->
-	<script type="text/javascript">
- $(document)
-	    .ready(function() {
-		
-	      $('.ui.selection.dropdown').dropdown();
-	      $('.ui.menu .ui.dropdown').dropdown({
-	        on: 'hover'
-	      });
+
+
+<!-- JQUERY TO PASS ======================================================== -->
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$('.ui.selection.dropdown').dropdown();
+	$('.ui.menu .ui.dropdown').dropdown({ on: 'hover' });
 	   
-
 	$.getJSON( "/api/getUrls", function( data ) {
-  console.log(data);
-});
+  		console.log(data);
+	});
 
-		$("#getstatus").on("click", function(event) {
-	      //event.preventDefault();
-	      $.getJSON( "/api/checkstatus", function( data ) {
-	          updateUrlsTable();
-              $('.segment').dimmer('hide');
-			});
-
-	      $('.segment').dimmer('show');
+	$("#getstatus").on("click", function(event) {
+	//event.preventDefault();
+		$.getJSON( "/api/checkstatus", function( data ) {
+	        updateUrlsTable();
+            $('.segment').dimmer('hide');
+            $("#STATUSwaitmessage").hide();
 		});
+
+	    $('.segment').dimmer('show');
+	    $("#STATUSwaitmessage").show();
+
+	});
 
 		$("#getscreenshots").on("click", function(event) {
 	      event.preventDefault();
 	      $.getJSON( "/api/getscreenshots", function( data ) {
               updateUrlsTable();
               $('.segment').dimmer('hide');
+              $("#SHOTSwaitmessage").hide();
 	      });
 
 	      $('.segment').dimmer('show');
+	      $("#SHOTSwaitmessage").show();
         });
+
+        $("#checkSSL").on("click", function(event) {
+	      event.preventDefault();
+	      $.getJSON( "/api/checkSSL", function( data ) {
+              updateSslTable();
+              $('.segment').dimmer('hide');
+              $("#SSLwaitmessage").hide();
+	      });
+
+	      $('.segment').dimmer('show');
+	      $("#SSLwaitmessage").show();
+        });
+
 
 		$("#learnmore").on("click", function(event) {
 	      $('.ui.basic.modal')
@@ -290,13 +293,16 @@
 	          			// Clear the form when submitting
 	          			$("#niceurl").val("");
                         $("div.input").toggleClass("disabled");
+                        $('.segment').dimmer('hide');
                         $("#waitmessage").hide();
 
                         updateUrlsTable();
 	        		});
 
-	        		//Turn on the wait message
-	      			$("div.icon").toggleClass("hidden");
+	        		//Turn on the wait message, disable form, dim the table area
+	        		$('.segment').dimmer('show');
+	      			$("div.success").toggleClass("hidden");
+	      			$("#waitmessage").show();
 	      			$("div.input").toggleClass("disabled");
 				}
 		};
@@ -305,7 +311,87 @@
 	      
 	</script>
 
+<!-- HANDLEBARS TEMPLATES =============================================================== -->
 
+<!-- SSL TABLE TEMPLATE -->
+<script id="ssl-table-template" type="text/x-handlebars-template"> 
+<div style="float:right; padding-bottom:25px;">
+	<table class="ui celled table" id="ssl-table" >
+    <thead> 
+        <th>Item</th> 
+        <th>Value</th> 
+    </thead> 
+        <tr> 
+            <td>Server IP:</td> 
+            <td>{{serverIP}}</td> 
+        </tr>
+        <tr> 
+            <td>Server Name:</td> 
+            <td>{{serverName}}</td> 
+        </tr>
+        <tr> 
+            <td>SSL Status Message:</td> 
+            <td>{{statusMessage}}</td> 
+        </tr>
+        <!-- <tr> 
+            <td>SSL Cert Hostname:</td> 
+            <td>{{certHostname}}</td> 
+        </tr> -->
+        <tr> 
+            <td>SSL Grade:</td> 
+            <td>A</td> 
+        </tr>
+        <tr> 
+            <td>SSL Forced:</td> 
+            <td>False</td> 
+        </tr>  
+    </tbody> 
+</table> 
+</div>
+<br/>
+</script>
+
+
+<!-- SITENAME TEMPLATE -->
+<script id="sitename" type = "text/x-handlebars-template">
+{{sitename}}
+</script>
+
+
+<!-- TABLE TEMPLATE -->
+<script id="table-template" type="text/x-handlebars-template"> 
+	<table class="ui celled table" id="urls-table" >
+    <thead> 
+        <th>ID</th> 
+        <th>URL</th> 
+        <th>URL Status</th>
+        <!-- <th>screenshotPath</th> -->
+        <th>Base</th>
+        <th>New Shot</th>
+        <th>View Image</th> 
+    </thead> 
+    <tbody>
+	{{#each urls}}
+        <tr> 
+            <td>{{URLid}}</td> 
+            <td>{{URL}}</td> 
+            <td>{{statusCode}}</td> 
+            <!-- <td>{{screenshotPath}}</td> -->
+            <td><div class="ui icon button" data-tooltip="No base image set. Upgrade to create image comparisons." >
+  				<i class="cancel icon"></i>
+				</div></i></td>
+            <td><div class="ui icon button positive" data-tooltip="Click the icon to view most recent screenshot." >
+  				<i class="check icon"></i>
+				</div></i></td>
+            <td><a target="_blank" href="/static/screenshots/{{URLid}}.png">View</a></td> 
+        </tr> 
+        {{/each}}
+    </tbody> 
+</table> 
+</script>
+
+
+<!-- END BODY -->
 </body>
-
+<!-- END HTML -->
 </html>
